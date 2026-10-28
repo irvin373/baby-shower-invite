@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Estás invitado al baby shower de Daziel. Domingo 29 de Noviembre, 14:30.">
+<meta property="og:title" content="Baby Shower de Daziel">
+<meta property="og:description" content="Estás invitado al baby shower de Daziel. Domingo 29 de Noviembre, 14:30.">
+<meta property="og:type" content="website">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Baby Shower de Daziel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&display=swap">
+<style>
+/* Layout: one phone-width column styled as an 8-bit title screen: HUD bar, item card, dialog box, logo, menu with expandable panels. */
+:root {
+  --sky: #fbd3df;
+  --sky-deep: #f4a9c0;
+  --petal: #ff8fb1;
+  --blossom: #e5487a;
+  --plum: #3d1b38;
+  --cream: #fff6f0;
+  --gold: #f6b93b;
+  --font-display: "Press Start 2P", "Courier New", monospace;
+  --font-body: "DotGothic16", "Hiragino Kaku Gothic ProN", "Courier New", monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--sky);
+  background-image: linear-gradient(180deg, var(--sky-deep) 0%, var(--sky) 38%, var(--cream) 100%);
+  background-attachment: fixed;
+  color: var(--plum);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  padding-block: 16px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  min-height: 100vh;
+}
+#petals { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.screen { position: relative; z-index: 1; max-width: 460px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+
+.hud { display: flex; justify-content: space-between; gap: 8px; font: 9px/1.6 var(--font-display); text-transform: uppercase; }
+.hud span { min-width: 0; }
+.life { color: var(--blossom); letter-spacing: 2px; }
+
+.stage { display: flex; flex-direction: column; align-items: center; gap: 22px; padding-block: 6px; }
+.card {
+  width: 150px; aspect-ratio: 3 / 4.3; max-width: 100%; padding: 0; border: 0; background: none; cursor: pointer;
+  perspective: 900px; animation: bob 2.4s steps(6) infinite;
+}
+.card:focus-visible { outline: 4px solid var(--gold); outline-offset: 10px; }
+.flip { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.3, 1.2, 0.5, 1); }
+.card[aria-pressed="true"] .flip { transform: rotateY(180deg); }
+.face {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  border: 4px solid var(--plum); outline: 4px solid var(--gold); box-shadow: 8px 8px 0 var(--blossom);
+}
+.front { background: var(--cream); }
+.back { background: var(--plum); transform: rotateY(180deg); padding: 6px; }
+.back img { width: 100%; height: auto; display: block; }
+.front::before, .front::after { content: "✦"; position: absolute; color: var(--gold); font-size: 16px; line-height: 1; }
+.front::before { top: 6px; left: 8px; }
+.front::after { bottom: 6px; right: 8px; }
+.front svg { width: 84%; height: auto; }
+.front b { position: absolute; bottom: 8px; left: 0; right: 0; text-align: center; font: 7px/1 var(--font-display); color: var(--plum); }
+.hint { margin: 0; font: 8px/1.6 var(--font-display); text-transform: uppercase; color: var(--blossom); }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-9px) rotate(3deg); } }
+
+.dialog {
+  background: var(--plum); color: var(--cream);
+  border: 4px solid var(--cream); outline: 4px solid var(--plum);
+  box-shadow: 0 0 0 8px var(--petal);
+  padding: 20px 18px 24px; margin: 6px 8px 0;
+  font: 12px/2 var(--font-display); position: relative;
+}
+.dialog p { margin: 0; text-wrap: balance; }
+.dialog em { font-style: normal; color: var(--gold); }
+.dialog .more { position: absolute; right: 12px; bottom: 6px; color: var(--petal); animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.logo { text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; padding-top: 10px; }
+.logo small { font: 9px/1.6 var(--font-display); letter-spacing: 1px; color: var(--blossom); }
+.logo h1, .logo .name {
+  margin: 0; font: clamp(30px, 11vw, 46px)/1.15 var(--font-display); text-transform: uppercase; color: var(--cream);
+  text-shadow: 3px 0 var(--plum), -3px 0 var(--plum), 0 3px var(--plum), 0 -3px var(--plum), 3px 3px var(--plum), -3px -3px var(--plum), 3px -3px var(--plum), -3px 3px var(--plum), 6px 6px 0 var(--blossom);
+}
+.logo .jp { font-size: 19px; letter-spacing: 3px; }
+.logo .kid { font: 10px/1.8 var(--font-display); background: var(--plum); color: var(--gold); padding: 6px 10px; }
+
+.menu { display: flex; flex-direction: column; gap: 12px; }
+.item { background: var(--cream); border: 4px solid var(--plum); box-shadow: 5px 5px 0 var(--blossom); }
+.item > button {
+  width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; cursor: pointer;
+  font: 11px/1.4 var(--font-display); text-transform: uppercase; color: var(--plum);
+  background: transparent; border: 0; padding: 16px 14px; min-height: 52px;
+}
+.item > button .cursor { visibility: hidden; color: var(--blossom); width: 14px; flex: none; }
+.item > button:hover .cursor, .item > button:focus-visible .cursor, .item > button[aria-expanded="true"] .cursor { visibility: visible; animation: blink 0.8s steps(2) infinite; }
+.item > button:focus-visible { outline: 4px solid var(--gold); outline-offset: -4px; }
+.item > button .tag { margin-left: auto; font-size: 8px; color: var(--blossom); }
+.panel { padding: 4px 16px 18px 40px; display: flex; flex-direction: column; gap: 14px; border-top: 3px dashed var(--petal); padding-top: 16px; }
+.panel[hidden] { display: none; }
+.row { display: grid; grid-template-columns: 78px 1fr; gap: 10px; align-items: start; }
+.row dt { font: 8px/2 var(--font-display); color: var(--blossom); text-transform: uppercase; }
+.row dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+dl { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.btn {
+  align-self: flex-start; cursor: pointer; text-decoration: none; display: inline-block;
+  font: 10px/1.4 var(--font-display); text-transform: uppercase;
+  background: var(--blossom); color: var(--cream); border: 4px solid var(--plum); padding: 12px 14px;
+  box-shadow: 4px 4px 0 var(--plum);
+}
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--plum); }
+.btn:focus-visible { outline: 4px solid var(--gold); outline-offset: 2px; }
+.btn.ghost { background: var(--cream); color: var(--plum); }
+.note { font-size: 15px; margin: 0; }
+.player { background: var(--plum); border: 4px solid var(--plum); outline: 4px solid var(--petal); margin: 4px 4px 4px 0; display: flex; justify-content: center; }
+.player video { display: block; width: 100%; max-height: 70vh; background: var(--plum); }
+.row a { color: var(--blossom); text-decoration: underline; text-underline-offset: 3px; }
+
+.foot { text-align: center; display: flex; flex-direction: column; gap: 10px; font: 8px/1.9 var(--font-display); text-transform: uppercase; }
+.press { color: var(--blossom); animation: blink 1.1s steps(2) infinite; font-size: 10px; }
+.fine { font: 14px/1.5 var(--font-body); text-transform: none; opacity: 0.8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .press, .dialog .more, .item > button .cursor { animation: none !important; }
+  .flip { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<main class="screen">
+  <div class="hud" aria-hidden="true">
+    <span>Jugador 1 · Invitado</span>
+    <span class="life">♥♥♥</span>
+    <span>Nv. 1</span>
+  </div>
+
+  <div class="stage">
+    <button type="button" class="card" id="card" aria-pressed="false" aria-label="Voltear la tarjeta de invitación">
+      <span class="flip">
+        <span class="face front">
+          <svg viewBox="-50 -50 100 100" aria-hidden="true">
+            <defs>
+              <path id="petal" d="M0,-4 C-15,-12 -17,-38 -7,-45 L0,-38 L7,-45 C17,-38 15,-12 0,-4 Z" fill="#ff8fb1" stroke="#3d1b38" stroke-width="3" stroke-linejoin="round"/>
+            </defs>
+            <use href="#petal"/>
+            <use href="#petal" transform="rotate(72)"/>
+            <use href="#petal" transform="rotate(144)"/>
+            <use href="#petal" transform="rotate(216)"/>
+            <use href="#petal" transform="rotate(288)"/>
+            <circle r="8" fill="#f6b93b" stroke="#3d1b38" stroke-width="3"/>
+          </svg>
+          <b>INVITACIÓN</b>
+        </span>
+        <span class="face back"><img src="sakura-logo.svg" alt="Logo Sakura"></span>
+      </span>
+    </button>
+    <p class="hint" aria-hidden="true">▲ Toca la carta ▲</p>
+  </div>
+
+  <div class="dialog" role="note">
+    <p>¡Es peligroso ir solo&hellip; <em>toma esta invitación al baby shower!</em></p>
+    <span class="more" aria-hidden="true">▼</span>
+  </div>
+
+  <header class="logo">
+    <small>★ EDICIÓN SAKURA ★</small>
+    <h1>Baby<br>Shower</h1>
+    <span class="jp" lang="ja">ベビーシャワー</span>
+    <span class="kid">para</span>
+    <h2 class="name">Daziel</h2>
+  </header>
+
+  <nav class="menu" aria-label="Menú de la invitación">
+    <section class="item">
+      <button type="button" aria-expanded="true" aria-controls="p-quest" id="b-quest">
+        <span class="cursor" aria-hidden="true">▶</span>Iniciar misión<span class="tag">Info</span>
+      </button>
+      <div class="panel" id="p-quest" role="region" aria-labelledby="b-quest">
+        <dl>
+          <div class="row"><dt>Fecha</dt><dd>Domingo 29 Noviembre 2026</dd></div>
+          <div class="row"><dt>Hora</dt><dd>14:30</dd></div>
+          <div class="row"><dt>Mapa</dt><dd><a id="addr" href="https://maps.app.goo.gl/PyJ2n6oiHDt6VswK7" target="_blank" rel="noopener">Abrir en Google Maps</a></dd></div>
+          <div class="row"><dt>Lugar</dt><dd>Azuleno</dd></div>
+        </dl>
+        <button type="button" class="btn ghost" id="copy">Copiar enlace del mapa</button>
+        <p class="note">Código de vestimenta: rosa sakura o cualquier look lindo, que sea cómodo porque tendremos actividades.</p>
+      </div>
+    </section>
+
+    <section class="item">
+      <button type="button" aria-expanded="false" aria-controls="p-why" id="b-why">
+        <span class="cursor" aria-hidden="true">▶</span>¿Por qué Daziel?<span class="tag">Video</span>
+      </button>
+      <div class="panel" id="p-why" role="region" aria-labelledby="b-why" hidden>
+        <div class="player">
+          <video controls playsinline preload="metadata" src="daziel.mp4" aria-label="Video: ¿Por qué Daziel?"></video>
+        </div>
+      </div>
+    </section>
+
+    <section class="item">
+      <button type="button" aria-expanded="false" aria-controls="p-party" id="b-party">
+        <span class="cursor" aria-hidden="true">▶</span>Confirmar asistencia<span class="tag">RSVP</span>
+      </button>
+      <div class="panel" id="p-party" role="region" aria-labelledby="b-party" hidden>
+        <p class="note">Confirma antes del 8 de Noviembre para guardarte un lugar. Se enviará un mensaje al +591 79356587.</p>
+        <a class="btn" id="wa" href="https://wa.me/59179356587?text=%C2%A1Hola!%20Confirmo%20mi%20asistencia%20al%20baby%20shower%20de%20Daziel." target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+      </div>
+    </section>
+
+    <section class="item">
+      <button type="button" aria-expanded="false" aria-controls="p-loot" id="b-loot">
+        <span class="cursor" aria-hidden="true">▶</span>Tesoro<span class="tag">Regalos</span>
+      </button>
+      <div class="panel" id="p-loot" role="region" aria-labelledby="b-loot" hidden>
+        <p class="note">Tu compañía es el mejor regalo. Si quieres llevar algo, cualquier regalo suben de nivel a los nuevos papás.</p>
+      </div>
+    </section>
+
+    <section class="item">
+      <button type="button" aria-expanded="false" aria-controls="p-side" id="b-side">
+        <span class="cursor" aria-hidden="true">▶</span>Misión secundaria<span class="tag">Extra</span>
+      </button>
+      <div class="panel" id="p-side" role="region" aria-labelledby="b-side" hidden>
+        <p class="note">Habrá una actividad donde podrás pintar ropita para Daziel. Si te gustaría ser parte de ella, avísanos para reservar un cupo para ti.</p>
+        <a class="btn" href="https://wa.me/59179356587?text=%C2%A1Hola!%20Quiero%20participar%20en%20la%20misi%C3%B3n%20secundaria%20del%20baby%20shower%20de%20Daziel%20(pintar%20ropita).%20%C2%A1Res%C3%A9rvenme%20un%20cupo!" target="_blank" rel="noopener">Quiero participar</a>
+      </div>
+    </section>
+  </nav>
+
+  <footer class="foot">
+    <span class="press">Presiona start</span>
+    <span>© 2026 · Hecho con ♥ para un nuevo jugador</span>
+    <span class="fine">Homenaje hecho por fans, inspirado en las flores de cerezo y las aventuras de chicas mágicas. Sin relación con ninguna marca oficial.</span>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var card = document.getElementById('card');
+  card.addEventListener('click', function () {
+    card.setAttribute('aria-pressed', String(card.getAttribute('aria-pressed') !== 'true'));
+  });
+
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.item > button'));
+  buttons.forEach(function (b, i) {
+    b.addEventListener('click', function () {
+      var panel = document.getElementById(b.getAttribute('aria-controls'));
+      var open = b.getAttribute('aria-expanded') === 'true';
+      b.setAttribute('aria-expanded', String(!open));
+      panel.hidden = open;
+    });
+    b.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        var n = (i + (e.key === 'ArrowDown' ? 1 : buttons.length - 1)) % buttons.length;
+        buttons[n].focus();
+      }
+    });
+  });
+
+  var copy = document.getElementById('copy');
+  copy.addEventListener('click', function () {
+    var text = document.getElementById('addr').href;
+    var done = function () { copy.textContent = '¡Copiado!'; setTimeout(function () { copy.textContent = 'Copiar enlace del mapa'; }, 1800); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('addr'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  });
+
+  var cv = document.getElementById('petals'), ctx = cv.getContext('2d');
+  if (!ctx || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var W, H, dpr, petals = [];
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function make(initial) {
+    return { x: Math.random() * W, y: initial ? Math.random() * H : -20, s: 6 + Math.random() * 9,
+      vy: 0.5 + Math.random() * 0.9, sway: Math.random() * Math.PI * 2, amp: 0.4 + Math.random() * 0.8,
+      r: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.04, c: Math.random() < 0.5 ? '#ffb3cb' : '#ff8fb1' };
+  }
+  function draw(p) {
+    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.scale(1, 0.75 + 0.25 * Math.sin(p.sway));
+    ctx.fillStyle = p.c; ctx.beginPath();
+    ctx.moveTo(0, p.s * 0.4);
+    ctx.bezierCurveTo(-p.s, -p.s * 0.2, -p.s * 0.7, -p.s, -p.s * 0.2, -p.s);
+    ctx.lineTo(0, -p.s * 0.75);
+    ctx.lineTo(p.s * 0.2, -p.s);
+    ctx.bezierCurveTo(p.s * 0.7, -p.s, p.s, -p.s * 0.2, 0, p.s * 0.4);
+    ctx.fill(); ctx.restore();
+  }
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    petals.forEach(function (p, i) {
+      p.y += p.vy; p.sway += 0.03; p.x += Math.sin(p.sway) * p.amp; p.r += p.vr;
+      if (p.y > H + 20) petals[i] = make(false);
+      draw(p);
+    });
+    requestAnimationFrame(tick);
+  }
+  size();
+  var n = W < 600 ? 22 : 38;
+  for (var i = 0; i < n; i++) petals.push(make(true));
+  window.addEventListener('resize', size);
+  tick();
+})();
+</script>
+
+</body>
+</html>
